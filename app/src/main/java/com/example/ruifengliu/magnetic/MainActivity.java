@@ -73,6 +73,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 btnSave.setEnabled(false);
                 magnetometer.save();
                 break;
+
+            case R.id.btnLoad:
+
+                break;
+
+            case R.id.btnMap:
+
+                break;
         }
     }
 

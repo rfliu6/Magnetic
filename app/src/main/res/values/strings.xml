@@ -2,6 +2,8 @@
     <string name="app_name">Magnetic</string>
     <string name="textView">Type your filename</string>
     <string name="btnSave">Save</string>
-    <string name="btnStart">Save</string>
-    <string name="btnStop">Save</string>
+    <string name="btnStart">Start</string>
+    <string name="btnStop">Stop</string>
+    <string name="btnLoad">Load</string>
+    <string name="btnMap">Map</string>
 </resources>
