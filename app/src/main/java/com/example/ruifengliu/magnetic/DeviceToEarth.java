@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+
 /**
  * Created by ruifengliu on 27/9/2016.
  */

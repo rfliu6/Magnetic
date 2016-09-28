@@ -1,5 +1,6 @@
 package com.example.ruifengliu.magnetic;
 
+import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
@@ -14,11 +15,13 @@ import java.util.ArrayList;
 public class TextFile {
     private ArrayList<MagElement> deviceMagList, earthMagList;
     private String fileName;
+    private Context context;
 
-    public TextFile(String fileName, ArrayList<MagElement> deviceMagList, ArrayList<MagElement> earthMagList){
+    public TextFile(Context context, String fileName, ArrayList<MagElement> deviceMagList, ArrayList<MagElement> earthMagList){
         this.fileName = fileName;
         this.deviceMagList = deviceMagList;
         this.earthMagList = earthMagList;
+        this.context = context;
     }
 
     public void write(){
@@ -30,22 +33,24 @@ public class TextFile {
                     folder.mkdirs();
                 }
 
-                String filePath0 = Environment.getExternalStorageDirectory().getCanonicalPath() + "/data/" + fileName + "_device.csv";
+                //String filePath0 = Environment.getExternalStorageDirectory().getCanonicalPath() + "/data/" + fileName + "_device.csv";
                 String filePath1 = Environment.getExternalStorageDirectory().getCanonicalPath() + "/data/" + fileName + "_earth.csv";
-                FileOutputStream output0 = new FileOutputStream(filePath0);
+                /*FileOutputStream output0 = new FileOutputStream(filePath0);
+                Toast.makeText(context, filePath0, Toast.LENGTH_SHORT).show();
                 for(MagElement tmp: deviceMagList) {
                     output0.write(tmp.toString().getBytes());
                     output0.write("\n\r".getBytes());
                 }
-                output0.close();
+                output0.close();*/
 
                 FileOutputStream output1 = new FileOutputStream(filePath1);
                 for(MagElement tmp: earthMagList) {
                     output1.write(tmp.toString().getBytes());
                     output1.write("\n\r".getBytes());
                 }
-                output0.close();
-            } //else Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
+                //output0.close();
+                output1.close();
+            }  //else Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         }

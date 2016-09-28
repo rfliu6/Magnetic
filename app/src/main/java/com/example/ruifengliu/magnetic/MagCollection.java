@@ -2,6 +2,7 @@ package com.example.ruifengliu.magnetic;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.hardware.Sensor;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by ruifengliu on 19/9/2016.
  */
-public class Magnetometer implements SensorEventListener {
+public class MagCollection implements SensorEventListener {
 
     private SensorManager sensorManager;
     private Sensor msensor, gsensor;
@@ -35,8 +36,9 @@ public class Magnetometer implements SensorEventListener {
     private Activity activity;
     private TextView sensorTextView;
     private float[] gravityValues = null;
+    private DataBaseHelper dbHelper;
 
-    public Magnetometer(Context context, Activity activity) {
+    public MagCollection(Context context, Activity activity) {
         this.context = context;
         this.activity = activity;
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -75,7 +77,7 @@ public class Magnetometer implements SensorEventListener {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 fileName = userInput.getText().toString();
-                                TextFile file = new TextFile(fileName, deviceMagList,earthMagList);
+                                TextFile file = new TextFile(context,fileName, deviceMagList,earthMagList);
                                 file.write();
                             }
                         })
@@ -87,6 +89,12 @@ public class Magnetometer implements SensorEventListener {
                         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+        dbHelper = new DataBaseHelper(context, null);
+        Path path = new Path(0, earthMagList);
+        dbHelper.onInsert(path);
+        dbHelper.close();
+
+
     }
         @Override
     public void onSensorChanged(SensorEvent event) {

@@ -1,6 +1,5 @@
 package com.example.ruifengliu.magnetic;
 
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +9,10 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
-    private Magnetometer magnetometer;
+    private MagCollection magcollection;
+    private DataSet database;
     private static final String TAG = "magnet";
-    private Button btnStart, btnSave, btnStop;
+    private Button btnStart, btnSave, btnStop, btnLoad, btnMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +22,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         btnStart = (Button) findViewById(R.id.btnStart);
         btnSave = (Button) findViewById(R.id.btnSave);
         btnStop = (Button) findViewById(R.id.btnStop);
+        btnLoad = (Button) findViewById(R.id.btnLoad);
+        btnMap = (Button) findViewById(R.id.btnMap);
 
         btnStart.setOnClickListener(this);
         btnStop.setOnClickListener(this);
         btnSave.setOnClickListener(this);
+        btnLoad.setOnClickListener(this);
+        btnMap.setOnClickListener(this);
         btnStart.setEnabled(true);
         btnStop.setEnabled(false);
         btnSave.setEnabled(false);
+        btnLoad.setEnabled(true);
+        btnMap.setEnabled(false);
 
-        magnetometer = new Magnetometer(this, this);
+        magcollection = new MagCollection(this, this);
+        database = new DataSet(this);
     }
 
     @Override
@@ -57,25 +64,26 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 btnStart.setEnabled(false);
                 btnStop.setEnabled(true);
                 btnSave.setEnabled(false);
-                magnetometer.start();
+                magcollection.start();
                 break;
 
             case R.id.btnStop:
                 btnStart.setEnabled(true);
                 btnStop.setEnabled(false);
                 btnSave.setEnabled(true);
-                magnetometer.stop();
+                magcollection.stop();
                 break;
 
             case R.id.btnSave:
                 btnStart.setEnabled(true);
                 btnStop.setEnabled(false);
+                btnStop.setEnabled(false);
                 btnSave.setEnabled(false);
-                magnetometer.save();
+                magcollection.save();
                 break;
 
             case R.id.btnLoad:
-
+                database.Load();
                 break;
 
             case R.id.btnMap:
