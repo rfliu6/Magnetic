@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by ruifengliu on 19/9/2016.
  */
-public class MagCollection implements SensorEventListener {
+public class MFCollection implements SensorEventListener {
 
     private SensorManager sensorManager;
     private Sensor msensor, gsensor;
@@ -38,7 +38,7 @@ public class MagCollection implements SensorEventListener {
     private float[] gravityValues = null;
     private DataBaseHelper dbHelper;
 
-    public MagCollection(Context context, Activity activity) {
+    public MFCollection(Context context, Activity activity) {
         this.context = context;
         this.activity = activity;
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);

@@ -36,6 +36,11 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_TABLE);
     }
 
+    public void onDelete(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("delete from "+ dbTable);
+    }
+
     public void onInsert(Path path){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();

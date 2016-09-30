@@ -3,7 +3,9 @@
     <string name="textView">Type your filename</string>
     <string name="btnSave">Save</string>
     <string name="btnStart">Start</string>
-    <string name="btnStop">Stop</string>
+    <string name="btnFinish">Finish</string>
     <string name="btnLoad">Load</string>
     <string name="btnMap">Map</string>
+    <string name="btnStop">Stop</string>
+    <string name="btnDelete">Delete</string>
 </resources>

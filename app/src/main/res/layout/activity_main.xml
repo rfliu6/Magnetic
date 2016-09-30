@@ -29,8 +29,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/btnStop"
-            android:id="@+id/btnStop"
+            android:text="@string/btnFinish"
+            android:id="@+id/btnFinish"
             style="?android:attr/borderlessButtonStyle" />
 
         <Button
@@ -64,6 +64,22 @@
             android:layout_height="wrap_content"
             android:text="@string/btnMap"
             android:id="@+id/btnMap"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/btnStop"
+            android:id="@+id/btnStop"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/btnDelete"
+            android:id="@+id/btnDelete"
             style="?android:attr/borderlessButtonStyle"/>
 
     </LinearLayout>

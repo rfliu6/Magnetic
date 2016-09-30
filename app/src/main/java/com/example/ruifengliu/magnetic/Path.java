@@ -43,4 +43,7 @@ public class Path {
         return id;
     }
 
+    public  ArrayList<MagElement> getEarthMagList(){
+        return earthMagList;
+    }
 }

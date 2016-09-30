@@ -9,10 +9,10 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
-    private MagCollection magcollection;
-    private DataSet database;
+    private MFCollection magcollection;
+    private MFMatch database;
     private static final String TAG = "magnet";
-    private Button btnStart, btnSave, btnStop, btnLoad, btnMap;
+    private Button btnStart, btnSave, btnFinish, btnLoad, btnMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,23 +21,24 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         btnStart = (Button) findViewById(R.id.btnStart);
         btnSave = (Button) findViewById(R.id.btnSave);
-        btnStop = (Button) findViewById(R.id.btnStop);
+        btnFinish = (Button) findViewById(R.id.btnFinish);
         btnLoad = (Button) findViewById(R.id.btnLoad);
         btnMap = (Button) findViewById(R.id.btnMap);
 
         btnStart.setOnClickListener(this);
-        btnStop.setOnClickListener(this);
+        btnFinish.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         btnLoad.setOnClickListener(this);
         btnMap.setOnClickListener(this);
         btnStart.setEnabled(true);
-        btnStop.setEnabled(false);
+        btnFinish.setEnabled(false);
         btnSave.setEnabled(false);
         btnLoad.setEnabled(true);
         btnMap.setEnabled(false);
+        btnMap.setEnabled(true);
 
-        magcollection = new MagCollection(this, this);
-        database = new DataSet(this);
+        magcollection = new MFCollection(this, this);
+        database = new MFMatch(this, this);
     }
 
     @Override
@@ -62,31 +63,42 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             case R.id.btnStart:
                 Log.d(TAG,"btnStart");
                 btnStart.setEnabled(false);
-                btnStop.setEnabled(true);
+                btnFinish.setEnabled(true);
                 btnSave.setEnabled(false);
                 magcollection.start();
                 break;
 
-            case R.id.btnStop:
+            case R.id.btnFinish:
                 btnStart.setEnabled(true);
-                btnStop.setEnabled(false);
+                btnFinish.setEnabled(false);
                 btnSave.setEnabled(true);
                 magcollection.stop();
                 break;
 
             case R.id.btnSave:
                 btnStart.setEnabled(true);
-                btnStop.setEnabled(false);
-                btnStop.setEnabled(false);
+                btnFinish.setEnabled(false);
+                btnFinish.setEnabled(false);
                 btnSave.setEnabled(false);
                 magcollection.save();
                 break;
 
             case R.id.btnLoad:
                 database.Load();
+                btnMap.setEnabled(true);
                 break;
 
             case R.id.btnMap:
+                database.Map();
+                break;
+
+            case R.id.btnStop:
+
+
+                break;
+
+            case R.id.btnDelete:
+                database.Delete();
 
                 break;
         }

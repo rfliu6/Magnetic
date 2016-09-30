@@ -39,7 +39,8 @@ public class DeviceToEarth {
         long timestamp = System.currentTimeMillis();
         deviceMagElement = new MagElement(timestamp, deviceMag[0], deviceMag[1], deviceMag[2]);
         earthMagElement = new MagElement(timestamp, earthMag[0], earthMag[1], earthMag[2]);
-        show();
+        if(sensorTextView != null)
+            show();
     }
 
     public void show(){
