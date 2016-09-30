@@ -9,10 +9,10 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
-    private MFCollection magcollection;
-    private MFMatch database;
+    private MFCollection mfCollection;
+    private MFMatch mfMatch;
     private static final String TAG = "magnet";
-    private Button btnStart, btnSave, btnFinish, btnLoad, btnMap;
+    private Button btnStart, btnSave, btnFinish, btnLoad, btnMap, btnStop, btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,23 +22,30 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         btnStart = (Button) findViewById(R.id.btnStart);
         btnSave = (Button) findViewById(R.id.btnSave);
         btnFinish = (Button) findViewById(R.id.btnFinish);
+
         btnLoad = (Button) findViewById(R.id.btnLoad);
         btnMap = (Button) findViewById(R.id.btnMap);
+        btnStop = (Button) findViewById(R.id.btnStop);
+        btnDelete = (Button) findViewById(R.id.btnDelete);
 
         btnStart.setOnClickListener(this);
         btnFinish.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         btnLoad.setOnClickListener(this);
         btnMap.setOnClickListener(this);
+        btnStop.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
+
         btnStart.setEnabled(true);
         btnFinish.setEnabled(false);
         btnSave.setEnabled(false);
         btnLoad.setEnabled(true);
-        btnMap.setEnabled(false);
         btnMap.setEnabled(true);
+        btnStop.setEnabled(false);
+        btnDelete.setEnabled(true);
 
-        magcollection = new MFCollection(this, this);
-        database = new MFMatch(this, this);
+        mfCollection = new MFCollection(this, this);
+        mfMatch = new MFMatch(this, this);
     }
 
     @Override
@@ -65,41 +72,45 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 btnStart.setEnabled(false);
                 btnFinish.setEnabled(true);
                 btnSave.setEnabled(false);
-                magcollection.start();
+                mfCollection.start();
                 break;
 
             case R.id.btnFinish:
                 btnStart.setEnabled(true);
                 btnFinish.setEnabled(false);
                 btnSave.setEnabled(true);
-                magcollection.stop();
+                mfCollection.stop();
                 break;
 
             case R.id.btnSave:
                 btnStart.setEnabled(true);
                 btnFinish.setEnabled(false);
-                btnFinish.setEnabled(false);
                 btnSave.setEnabled(false);
-                magcollection.save();
+                btnLoad.setEnabled(true);
+                mfCollection.save();
                 break;
 
             case R.id.btnLoad:
-                database.Load();
+                mfMatch.load();
+                btnLoad.setEnabled(false);
                 btnMap.setEnabled(true);
                 break;
 
             case R.id.btnMap:
-                database.Map();
+                mfMatch.map();
+                btnMap.setEnabled(false);
+                btnStop.setEnabled(true);
                 break;
 
             case R.id.btnStop:
-
-
+                mfMatch.stop();
+                btnMap.setEnabled(true);
+                btnStop.setEnabled(false);
                 break;
 
             case R.id.btnDelete:
-                database.Delete();
-
+                mfMatch.delete();
+                btnLoad.setEnabled(true);
                 break;
         }
     }

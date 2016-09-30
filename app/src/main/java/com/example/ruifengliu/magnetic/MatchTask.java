@@ -39,8 +39,9 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
                             + Math.pow(pathList.get(i).getEarthMagList().get(j+k).getZ()-earthMagQueue.get(k).getZ(), 2);
                     }
                     if(sum < distance){
-                        pathId = i;
-                        ratio = (float)j/pathList.get(i).getSize();
+                        pathId = pathList.get(i).getId();
+                       // pathId = i;
+                        ratio = (float)(j+earthMagQueue.size())/pathList.get(i).getSize();
                         distance = sum;
                     }
                 }
@@ -54,7 +55,7 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
         Activity activity = mWeakActivity.get();
         if (activity != null) {
             TextView mapTextView = (TextView) activity.findViewById(R.id.magxyz);
-            mapTextView.setText(String.format(Locale.US,"%d, %f\n", p.pathId, p.ratio));
+            mapTextView.setText(String.format(Locale.US,"pathId: %d, ratio: %f\n", p.pathId, p.ratio));
         }
         super.onPostExecute(p);
     }

@@ -78,6 +78,7 @@ public class MFCollection implements SensorEventListener {
                             public void onClick(DialogInterface dialog,int id) {
                                 fileName = userInput.getText().toString();
                                 TextFile file = new TextFile(context,fileName, deviceMagList,earthMagList);
+
                                 file.write();
                             }
                         })
@@ -89,12 +90,11 @@ public class MFCollection implements SensorEventListener {
                         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-        dbHelper = new DataBaseHelper(context, null);
+      /*  dbHelper = new DataBaseHelper(context, null);
         Path path = new Path(0, earthMagList);
         dbHelper.onInsert(path);
         dbHelper.close();
-
-
+        Toast.makeText(context, "Path Saved", Toast.LENGTH_SHORT).show();*/
     }
         @Override
     public void onSensorChanged(SensorEvent event) {

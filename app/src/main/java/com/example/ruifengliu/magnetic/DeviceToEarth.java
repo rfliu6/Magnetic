@@ -8,7 +8,9 @@ import java.util.Locale;
 
 
 /**
- * Created by ruifengliu on 27/9/2016.
+ * device coordinate to earth coordinate
+ *
+ * event: get device
  */
 public class DeviceToEarth {
     private TextView sensorTextView;

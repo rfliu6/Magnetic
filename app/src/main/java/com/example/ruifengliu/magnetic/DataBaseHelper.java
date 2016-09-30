@@ -2,20 +2,23 @@ package com.example.ruifengliu.magnetic;
 
 import android.content.ContentValues;
 import android.content.Context;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by ruifengliu on 28/9/2016.
  */
-public class DataBaseHelper extends SQLiteOpenHelper{
+public class DataBaseHelper extends SQLiteOpenHelper {
 
    // private Context context;
-   // SQLiteDatabase db;
+   // SQLitemfmatch db;
     private static final String dbName = "/storage/emulated/0/data/magnetic.db";
     private static final String dbTable= "Path";
     private static final String keyRowId = "RowId";
@@ -58,7 +61,8 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
         if (cursor.moveToFirst()) {
             do {
-                Path path = new Path(cursor.getString(1),cursor.getString(2),cursor.getString(3));
+               // Path path = new Path(cursor.getString(1),cursor.getString(2),cursor.getString(3));
+                Path path = new Path(cursor.getString(0),cursor.getString(2),cursor.getString(3));
                 pathList.add(path);
             } while (cursor.moveToNext());
         }

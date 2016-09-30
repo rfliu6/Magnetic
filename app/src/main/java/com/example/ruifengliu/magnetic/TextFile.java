@@ -33,16 +33,16 @@ public class TextFile {
                     folder.mkdirs();
                 }
 
-                //String filePath0 = Environment.getExternalStorageDirectory().getCanonicalPath() + "/data/" + fileName + "_device.csv";
+                String filePath0 = Environment.getExternalStorageDirectory().getCanonicalPath() + "/data/" + fileName + "_device.csv";
                 String filePath1 = Environment.getExternalStorageDirectory().getCanonicalPath() + "/data/" + fileName + "_earth.csv";
-                /*FileOutputStream output0 = new FileOutputStream(filePath0);
+                FileOutputStream output0 = new FileOutputStream(filePath0);
                 Toast.makeText(context, filePath0, Toast.LENGTH_SHORT).show();
                 for(MagElement tmp: deviceMagList) {
                     output0.write(tmp.toString().getBytes());
                     output0.write("\n\r".getBytes());
                 }
-                output0.close();*/
-
+                output0.close();
+                Toast.makeText(context, filePath0, Toast.LENGTH_SHORT).show();
                 FileOutputStream output1 = new FileOutputStream(filePath1);
                 for(MagElement tmp: earthMagList) {
                     output1.write(tmp.toString().getBytes());

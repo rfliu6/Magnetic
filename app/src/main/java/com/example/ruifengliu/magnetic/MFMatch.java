@@ -2,7 +2,6 @@ package com.example.ruifengliu.magnetic;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -39,26 +38,43 @@ public class MFMatch implements SensorEventListener {
         gsensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
     }
 
-    public void Delete(){
-        dbHelper = new DataBaseHelper(context, null);
-        dbHelper.onDelete();
-        dbHelper.close();
-        Toast.makeText(context, "Delete finish", Toast.LENGTH_SHORT).show();
+    public void load(){
+        if(!started) {
+            dbHelper = new DataBaseHelper(context, null);
+            pathList = dbHelper.onLoad();
+            TextView mapTextView = (TextView) activity.findViewById(R.id.magxyz);
+
+            String tmp = "path number " + pathList.size() + "\npath id";
+            for(int i =0; i<pathList.size(); i++){
+                tmp += " " + pathList.get(i).getId();
+            }
+            mapTextView.setText(tmp);
+           // mapTextView.setText(String.format(Locale.US, "%d\n", pathList.size()));
+            dbHelper.close();
+            Toast.makeText(context, "Load finish", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void Load(){
-        dbHelper = new DataBaseHelper(context, null);
-        pathList = dbHelper.onLoad();
-        dbHelper.close();
-        Toast.makeText(context, "Load finish", Toast.LENGTH_SHORT).show();
-    }
 
-
-    public void Map(){
+    public void map(){
         sensorManager.registerListener(this, msensor, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, gsensor, SensorManager.SENSOR_DELAY_NORMAL);
-        earthMagQueue = new CircularFifoQueue<>(30);
+        earthMagQueue = new CircularFifoQueue<>(20);
         started = true;
+    }
+
+    public void stop(){
+        sensorManager.unregisterListener(this);
+        started = false;
+    }
+
+    public void delete(){
+        if(!started) {
+            dbHelper = new DataBaseHelper(context, null);
+            dbHelper.onDelete();
+            dbHelper.close();
+            Toast.makeText(context, "Delete finish", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
