@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         btnStop = (Button) findViewById(R.id.btnStop);
         btnDelete = (Button) findViewById(R.id.btnDelete);
 
+
         btnStart.setOnClickListener(this);
         btnFinish.setOnClickListener(this);
         btnSave.setOnClickListener(this);
