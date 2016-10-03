@@ -66,7 +66,7 @@ public class MFCollection implements SensorEventListener {
 
     public void save() {
         Log.d("magneticlog","save");
-        LayoutInflater li = LayoutInflater.from(context);
+      /*  LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.prompts, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setView(promptsView);
@@ -89,12 +89,12 @@ public class MFCollection implements SensorEventListener {
                             }
                         });
         AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-      /*  dbHelper = new DataBaseHelper(context, null);
+        alertDialog.show();*/
+        dbHelper = new DataBaseHelper(context, null);
         Path path = new Path(0, earthMagList);
         dbHelper.onInsert(path);
         dbHelper.close();
-        Toast.makeText(context, "Path Saved", Toast.LENGTH_SHORT).show();*/
+        Toast.makeText(context, "Path Saved", Toast.LENGTH_SHORT).show();
     }
         @Override
     public void onSensorChanged(SensorEvent event) {
