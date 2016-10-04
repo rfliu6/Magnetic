@@ -3,7 +3,6 @@ package com.example.ruifengliu.magnetic;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.TextView;
-
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 import java.lang.ref.WeakReference;
