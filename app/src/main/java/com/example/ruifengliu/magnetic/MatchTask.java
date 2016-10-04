@@ -24,7 +24,6 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
        this.pathList = pathList;
     }
 
-
     protected MatchTask.Point doInBackground(Void... params) {
         double ratio = -1, minDistance = Float.MAX_VALUE;
         int pathId = -1;
