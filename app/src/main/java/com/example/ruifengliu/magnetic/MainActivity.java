@@ -10,10 +10,10 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private MFCollection mfCollection;
+
     private MFMatch mfMatch;
     private static final String TAG = "magnet";
     private Button btnStart, btnSave, btnFinish, btnLoad, btnMap, btnStop, btnDelete;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         btnSave.setOnClickListener(this);
         btnLoad.setOnClickListener(this);
         btnMap.setOnClickListener(this);
-        btnStop.setOnClickListener(this);
-        btnDelete.setOnClickListener(this);
-
         btnStart.setEnabled(true);
         btnFinish.setEnabled(false);
         btnSave.setEnabled(false);
@@ -43,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         btnMap.setEnabled(true);
         btnStop.setEnabled(false);
         btnDelete.setEnabled(true);
+        btnStop.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
 
         mfCollection = new MFCollection(this, this);
         mfMatch = new MFMatch(this, this);
