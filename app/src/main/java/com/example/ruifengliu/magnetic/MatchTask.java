@@ -2,9 +2,16 @@ package com.example.ruifengliu.magnetic;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -43,12 +50,13 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
                         minDistance = sum;
                     }
                 }*/
+
                 double[][] D = new double[earthMagQueue.size()][pathList.get(i).getSize()];
                 for(int j=0; j<earthMagQueue.size(); j++){
                     if(j == 0)
                         D[j][0] = getDistance(i,j,0);
                     else
-                        D[j][0] = getDistance(i,j,0) + D[j][0];
+                        D[j][0] = getDistance(i,j,0) + D[j-1][0];
                 }
                 for(int j=1; j<pathList.get(i).getSize(); j++){
                     D[0][j] = getDistance(i,0,j);
@@ -61,7 +69,7 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
                 for(int j=0; j<pathList.get(i).getSize(); j++){
                     if(D[earthMagQueue.size()-1][j] < minDistance){
                         minDistance = D[earthMagQueue.size()-1][j];
-                        ratio = (double)j/pathList.get(i).getSize();
+                        ratio = (double)(j)/pathList.get(i).getSize();
                         pathId = pathList.get(i).getId();
                     }
                 }
@@ -82,8 +90,9 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
         Activity activity = mWeakActivity.get();
         if (activity != null) {
             TextView mapTextView = (TextView) activity.findViewById(R.id.magxyz);
-            mapTextView.setText(String.format(Locale.US,"pathId: %d, ratio: %f\n", p.pathId, p.ratio));
+            mapTextView.setText(String.format(Locale.US,"pathId: %d, ratio: %f, time: %d\n", p.pathId, p.ratio, System.currentTimeMillis()));
         }
+
         super.onPostExecute(p);
     }
 
