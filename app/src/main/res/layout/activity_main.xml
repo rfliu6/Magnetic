@@ -90,7 +90,9 @@
         android:layout_height="0dp"
         android:layout_weight="4"
         android:text=""
-        android:id="@+id/magxyz"/>
+        android:id="@+id/magxyz"
+        android:textSize="@dimen/font_size"
+        android:lineSpacingExtra="@dimen/line_space" />
 
 
 

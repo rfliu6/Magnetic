@@ -25,10 +25,10 @@ public class MFMatch implements SensorEventListener {
     private ArrayList<Path> pathList;
     private SensorManager sensorManager;
     private Sensor msensor, gsensor;
-    public CircularFifoQueue<MagElement> earthMagQueue;
+    private CircularFifoQueue<MagElement> earthMagQueue;
     private boolean started = false;
     private float[] gravityValues = null;
-    MatchTask matchTask = null;
+    private MatchTask matchTask = null;
 
     public MFMatch(Context context, Activity activity){
         this.context = context;
@@ -48,6 +48,10 @@ public class MFMatch implements SensorEventListener {
             for(int i =0; i<pathList.size(); i++){
                 tmp += " " + pathList.get(i).getId();
             }
+            tmp+= "\npath size";
+            for(int i =0; i<pathList.size(); i++){
+                tmp += " " + pathList.get(i).getSize();
+            }
             mapTextView.setText(tmp);
            // mapTextView.setText(String.format(Locale.US, "%d\n", pathList.size()));
             dbHelper.close();
@@ -59,7 +63,7 @@ public class MFMatch implements SensorEventListener {
     public void map(){
         sensorManager.registerListener(this, msensor, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, gsensor, SensorManager.SENSOR_DELAY_NORMAL);
-        earthMagQueue = new CircularFifoQueue<>(20);
+        earthMagQueue = new CircularFifoQueue<>(30);
         started = true;
     }
 

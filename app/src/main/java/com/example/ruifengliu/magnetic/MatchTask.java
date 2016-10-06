@@ -1,6 +1,7 @@
 package com.example.ruifengliu.magnetic;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.widget.TextView;
@@ -10,11 +11,15 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static android.content.Context.MODE_APPEND;
 
 /**
  * Created by ruifengliu on 29/9/2016.
@@ -30,7 +35,21 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
        this.pathList = pathList;
     }
 
-    protected MatchTask.Point doInBackground(Void... params) {
+    protected void onPreExecute() {
+        String filePath = null;
+        try {
+            filePath = Environment.getExternalStorageDirectory().getCanonicalPath() + "/data/log.csv";
+            File outputfile = new File(filePath);
+            outputfile.createNewFile(); // if file already exists will do nothing
+            FileWriter f = new FileWriter(filePath, true);
+            f.write(System.currentTimeMillis()+",");
+            f.flush();
+            f.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+       protected MatchTask.Point doInBackground(Void... params) {
         double ratio = -1, minDistance = Float.MAX_VALUE;
         int pathId = -1;
 
@@ -75,7 +94,7 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
                 }
             }
         }
-        return new Point(pathId, (float)ratio);
+        return new Point(pathId, (float)ratio, (float)minDistance);
     }
 
 
@@ -90,9 +109,24 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
         Activity activity = mWeakActivity.get();
         if (activity != null) {
             TextView mapTextView = (TextView) activity.findViewById(R.id.magxyz);
-            mapTextView.setText(String.format(Locale.US,"pathId: %d, ratio: %f, time: %d\n", p.pathId, p.ratio, System.currentTimeMillis()));
-        }
+            mapTextView.setText(String.format(Locale.US,"pathId: %d\nratio: %f\ntime: %d\ndistance: %f\n", p.pathId, p.ratio, System.currentTimeMillis(), p.distance));
 
+            try {
+                String filePath = Environment.getExternalStorageDirectory().getCanonicalPath() + "/data/log.csv";
+                File outputfile = new File(filePath);
+                outputfile.createNewFile(); // if file already exists will do nothing
+                FileWriter f = new FileWriter(filePath, true);
+                String tmp = System.currentTimeMillis()+","+p.pathId+","+p.ratio+","+p.distance+"\n";
+
+                f.write(tmp);
+                f.flush();
+                f.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
         super.onPostExecute(p);
     }
 
@@ -100,10 +134,12 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
     {
         public int pathId;
         public float ratio;
+        public float distance;
 
-        Point(int pathId, float ratio){
+        Point(int pathId, float ratio, float distance){
             this.pathId = pathId;
             this.ratio = ratio;
+            this.distance = distance;
         }
     }
 }
