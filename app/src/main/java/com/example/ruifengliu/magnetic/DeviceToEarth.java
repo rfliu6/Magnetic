@@ -46,8 +46,8 @@ public class DeviceToEarth {
     }
 
     public void show(){
-        sensorTextView.setText(String.format(Locale.US,"Device\nx: %f\ny: %f\nz: %f\nEarth\nx: %f\n" +
-                "y: %f\nz: %f", deviceMag[0], deviceMag[1], deviceMag[2], earthMag[0], earthMag[1], earthMag[2]));
+      //  sensorTextView.setText(String.format(Locale.US,"Device\nx: %f\ny: %f\nz: %f\nEarth\nx: %f\n" +"y: %f\nz: %f", deviceMag[0], deviceMag[1], deviceMag[2], earthMag[0], earthMag[1], earthMag[2]));
+        sensorTextView.setText(String.format(Locale.US,"Earth\nx: %f\n" +"y: %f\nz: %f", earthMag[0], earthMag[1], earthMag[2]));
     }
 
     public MagElement getDeviceMagElement(){

@@ -109,8 +109,9 @@ public class MatchTask extends AsyncTask<Void, Void, MatchTask.Point> {
         Activity activity = mWeakActivity.get();
         if (activity != null) {
             TextView mapTextView = (TextView) activity.findViewById(R.id.magxyz);
-            mapTextView.setText(String.format(Locale.US,"pathId: %d\nratio: %f\ntime: %d\ndistance: %f\n", p.pathId, p.ratio, System.currentTimeMillis(), p.distance));
+            mapTextView.setText(String.format(Locale.US,"pathId: %d\nratio: %f\n\n\n\ndistance: %f\ntime: %d ms\n", p.pathId, p.ratio, p.distance, System.currentTimeMillis()));
 
+            //file to save the log data
             try {
                 String filePath = Environment.getExternalStorageDirectory().getCanonicalPath() + "/data/log.csv";
                 File outputfile = new File(filePath);

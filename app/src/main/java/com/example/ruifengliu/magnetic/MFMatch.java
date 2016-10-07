@@ -63,7 +63,7 @@ public class MFMatch implements SensorEventListener {
     public void map(){
         sensorManager.registerListener(this, msensor, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, gsensor, SensorManager.SENSOR_DELAY_NORMAL);
-        earthMagQueue = new CircularFifoQueue<>(30);
+        earthMagQueue = new CircularFifoQueue<>(20);
         started = true;
     }
 
@@ -89,7 +89,13 @@ public class MFMatch implements SensorEventListener {
                     DeviceToEarth element = new DeviceToEarth(event, null, gravityValues);
                     element.compute();
                     MagElement earthMagMagElement = element.getEarthMagElement();
-                    earthMagQueue.add(earthMagMagElement);
+                    if(earthMagQueue.isEmpty()){
+                        while(!earthMagQueue.isAtFullCapacity()){
+                            earthMagQueue.add(earthMagMagElement);
+                        }
+                    }else {
+                        earthMagQueue.add(earthMagMagElement);
+                    }
                 }
                 if (earthMagQueue.isAtFullCapacity()) {
                     if(matchTask == null || matchTask.getStatus() == AsyncTask.Status.FINISHED) {
