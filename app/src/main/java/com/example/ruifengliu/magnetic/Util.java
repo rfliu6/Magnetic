@@ -15,7 +15,6 @@ public class Util {
      * Gaussian probabilty density function
      *
 
-     * @return probability
      */
 
     public final static double gaussian(double x, double mu, double sigma) {
