@@ -39,14 +39,14 @@ public class TextFile {
                 Toast.makeText(context, filePath0, Toast.LENGTH_SHORT).show();
                 for(MagElement tmp: deviceMagList) {
                     output0.write(tmp.toString().getBytes());
-                    output0.write("\n\r".getBytes());
+                    output0.write("\n".getBytes());
                 }
                 output0.close();
                 Toast.makeText(context, filePath0, Toast.LENGTH_SHORT).show();
                 FileOutputStream output1 = new FileOutputStream(filePath1);
                 for(MagElement tmp: earthMagList) {
                     output1.write(tmp.toString().getBytes());
-                    output1.write("\n\r".getBytes());
+                    output1.write("\n".getBytes());
                 }
                 //output0.close();
                 output1.close();

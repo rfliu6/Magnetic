@@ -15,11 +15,13 @@ import java.util.Locale;
 public class DeviceToEarth {
     private TextView sensorTextView;
     private float[] gravityValues, deviceMag, earthMag;
-    MagElement deviceMagElement, earthMagElement;
+    private MagElement deviceMagElement, earthMagElement;
+    private int accuracy;
 
-    public DeviceToEarth(SensorEvent event, TextView sensorTextView, float[] gravityValues){
+    public DeviceToEarth(SensorEvent event, TextView sensorTextView, float[] gravityValues, int accuracy){
         this.sensorTextView = sensorTextView;
         this.gravityValues = gravityValues;
+        this.accuracy = accuracy;
         deviceMag = new float[4];
         earthMag = new float[16];
         deviceMag[0] = event.values[0];
@@ -46,8 +48,8 @@ public class DeviceToEarth {
     }
 
     public void show(){
-      //  sensorTextView.setText(String.format(Locale.US,"Device\nx: %f\ny: %f\nz: %f\nEarth\nx: %f\n" +"y: %f\nz: %f", deviceMag[0], deviceMag[1], deviceMag[2], earthMag[0], earthMag[1], earthMag[2]));
-        sensorTextView.setText(String.format(Locale.US,"Earth\nx: %f\n" +"y: %f\nz: %f", earthMag[0], earthMag[1], earthMag[2]));
+       // sensorTextView.setText(String.format(Locale.US,"Accuracy: %d\nDevice\nx: %f\ny: %f\nz: %f size: %f\n", accuracy, deviceMag[0], deviceMag[1], deviceMag[2], (float)(Math.pow(deviceMag[0],2) + Math.pow(deviceMag[1],2) +Math.pow(deviceMag[2],2))));
+      //  sensorTextView.append(String.format(Locale.US,"Earth\nx: %f\n" +"y: %f\nz: %f", earthMag[0], earthMag[1], earthMag[2]));
     }
 
     public MagElement getDeviceMagElement(){

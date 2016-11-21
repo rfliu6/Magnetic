@@ -2,6 +2,7 @@ package com.example.ruifengliu.magnetic;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.os.Environment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,23 +20,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
    // private Context context;
    // SQLitemfmatch db;
-    private static final String dbName = "/storage/emulated/0/data/magnetic.db";
+    private static final String dbName = Environment.getExternalStorageDirectory() + "/data/magnetic.db";
+
     private static final String dbTable= "Path";
     private static final String keyRowId = "RowId";
     private static final String keyPathId = "PathId";
     private static final String keyMag = "Mag";
     private static final String keySize = "Size";
+    private static final String keyLength = "Length";
     private static int version=1;
+    private Context context;
 
 
     public DataBaseHelper(Context context, SQLiteDatabase.CursorFactory factory){
         super(context, dbName, factory, version);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db){
         String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + dbTable + " ("
-                + keyRowId + " INTEGER PRIMARY KEY AUTOINCREMENT, " + keyPathId + " INTEGER, " + keySize + " INTEGER, " + keyMag + " TEXT )";
+                + keyRowId + " INTEGER PRIMARY KEY AUTOINCREMENT, " + keyPathId + " INTEGER, " + keySize + " INTEGER, " + keyLength + " INTEGER, " + keyMag + " TEXT )";
         db.execSQL(CREATE_TABLE);
     }
 
@@ -45,11 +50,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public void onInsert(Path path){
+
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(keyPathId,0);
         cv.put(keySize, path.getSize());
         cv.put(keyMag, path.getMagString());
+        cv.put(keyLength,path.getLength());
         db.insert(dbTable, null, cv);
     }
 
@@ -62,7 +69,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                // Path path = new Path(cursor.getString(1),cursor.getString(2),cursor.getString(3));
-                Path path = new Path(cursor.getString(0),cursor.getString(2),cursor.getString(3));
+                //rowid is the pathid.
+                Path path = new Path(cursor.getString(0),cursor.getString(2),cursor.getString(3),cursor.getString(4));
                 pathList.add(path);
             } while (cursor.moveToNext());
         }

@@ -1,11 +1,20 @@
 package com.example.ruifengliu.magnetic;
 
+import android.Manifest;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import static android.R.attr.targetSdkVersion;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
@@ -14,10 +23,37 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private MFMatch mfMatch;
     private static final String TAG = "magnet";
     private Button btnStart, btnSave, btnFinish, btnLoad, btnMap, btnStop, btnDelete;
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private int targetSdkVersion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            final PackageInfo info = getPackageManager().getPackageInfo(
+                    getPackageName(), 0);
+            targetSdkVersion = info.applicationInfo.targetSdkVersion;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (targetSdkVersion >= Build.VERSION_CODES.M) {
+                // targetSdkVersion >= Android M, we can
+                // use Context#checkSelfPermission
+                if(checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                }
+            } else {
+                // targetSdkVersion < Android M, we have to use PermissionChecker
+                if(PermissionChecker.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                }
+            }
+        }
 
         btnStart = (Button) findViewById(R.id.btnStart);
         btnSave = (Button) findViewById(R.id.btnSave);
@@ -45,6 +81,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         mfCollection = new MFCollection(this, this);
         mfMatch = new MFMatch(this, this);
+
+       /* if(Build.Version.SDK_INT >= Build.VERSION_CODES.MARSHMALLOW) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG, "Permission is granted");
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        }*/
+
     }
 
     @Override

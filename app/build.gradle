@@ -26,5 +26,9 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile 'org.apache.commons:commons-collections4:4.1'
     compile "com.google.guava:guava:18.0"
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+}
 
+repositories {
+    maven { url "https://jitpack.io" }
 }

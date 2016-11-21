@@ -8,6 +8,7 @@ public class MagElement {
     private double y;
     private double z;
     private long timestamp;
+    private double probability;
 
     public MagElement(long timestamp, double x, double y, double z){
         this.x = x;
@@ -46,6 +47,15 @@ public class MagElement {
 
     public long getTimestamp(){
         return this.timestamp;
+    }
+
+
+    public void setProbability(double probability){
+        this.probability = probability;
+    }
+
+    public double getProbability(){
+        return this.probability;
     }
 
     public String toString(){
